@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flash Voice Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Icons for GitHub & LinkedIn -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #000;
+    }
+
+    /* Background Canvas */
+    #bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    /* Top Section */
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #00ffe7;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    }
+    header p {
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      color: #ccc;
+      max-width: 700px;
+      margin: 10px auto 0;
+      line-height: 1.5;
+      padding: 0 20px;
+    }
+
+    /* Form Container */
+    .container {
+      background: rgba(25, 25, 25, 0.95);
+      padding: 50px; /* increased from 40px */
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      width: 700px; /* increased from 400px */
+      max-width: 90%; /* keeps it responsive */
+      margin: 0 auto 60px;
+      height: 700px;
+      animation: floatIn 0.8s ease;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #00ffe7;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffe7;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+    input[type="file"],
+    textarea,
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2c2c2c;
+      color: #ffffff;
+      font-size: 14px;
+      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    input[type="file"]::-webkit-file-upload-button {
+      background-color: #00ffe7;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    textarea {
+      resize: none;
+      height: 200px;
+    }
+    input[type="submit"] {
+      background: linear-gradient(to right, #00ffe7, #0099ff);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 0 8px #00ffe7;
+    }
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #0099ff, #00ffe7);
+      transform: scale(1.03);
+    }
+    textarea:focus,
+    input[type="file"]:focus {
+      outline: none;
+      box-shadow: 0 0 5px #00ffe7;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .social-links a {
+      color: #00ffe7;
+      font-size: 1.4rem;
+      margin: 0 10px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-links a:hover {
+      transform: scale(1.2);
+      color: #0099ff;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 3D Background -->
+  <canvas id="bg"></canvas>
+
+  <!-- Top Text -->
+  <header>
+    <h1>Flash Voice Clone</h1>
+    <p>Transform any text into speech using the exact same voice from your reference audio. Our advanced AI model (YourTTS) can mimic tone, pitch, and style for ultra-realistic voice cloning.</p>
+  </header>
+
+  <!-- Main Form -->
+  <div class="container">
+    <h2>Try It Now</h2>
+    <form action="/generate" method="post" enctype="multipart/form-data">
+      <label>Upload Reference Audio (WAV):</label>
+      <input type="file" name="audio" accept="audio/wav" required>
+
+      <label>Text to Synthesize:</label>
+      <textarea name="text" placeholder="Example: Once upon a time in a small village there lived a wise old man..." required></textarea>
+
+      <input type="submit" value="Generate Voice">
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-links">
+      <a href="https://github.com/muhammad-suleman-ms" target="_blank" title="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/muhammadsuleman-ms/" target="_blank" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+    © 2025 Flash Voice Clone. Powered by YourTTS AI.
+  </footer>
+
+  <!-- Three.js Particle Background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const canvas = document.querySelector('#bg');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.position.z = 5;
+
+    const particlesCount = 2000;
+    const positions = new Float32Array(particlesCount * 3);
+    for (let i = 0; i < particlesCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 10;
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({ color: 0x00ffe7, size: 0.02 });
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      particles.rotation.y += 0.0005;
+      particles.rotation.x += 0.0003;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
